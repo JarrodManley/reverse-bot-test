@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ask FRANK or IRIS</title>
+  <style>
+    .bot-options { display: flex; gap: 1rem; justify-content: center; padding: 1rem; flex-wrap: wrap; }
+    .bot-options button {
+      font-size: 1.2rem;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: background 0.3s;
+      flex: 1;
+      min-width: 140px;
+    }
+    .bot-options button:hover {
+      background: #f0f0f0;
+    }
+    .chat-container {
+      max-width: 600px;
+      margin: auto;
+      padding: 2rem;
+      font-family: sans-serif;
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .voice-btn {
+      margin-top: 1.5rem;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      background-color: #0053a0;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <h2>Welcome! Who would you like to talk to today?</h2>
+    <div class="bot-options">
+      <button onclick="startBot('frank')">👔 Ask FRANK</button>
+      <button onclick="startBot('iris')">🌸 Ask IRIS</button>
+    </div>
+    <p>FRANK gives dependable, straightforward advice.<br>IRIS offers gentle, kind support with a warm tone.</p>
+    <button class="voice-btn" onclick="activateVoice()">🎤 Start Talking</button>
+  </div>
+
+  <script>
+    const botPersonality = {
+      frank: {
+        name: "FRANK",
+        voice: "steady, trustworthy, matter-of-fact",
+        tone: "Let’s take a look at what makes the most sense for you."
+      },
+      iris: {
+        name: "IRIS",
+        voice: "warm, nurturing, softly encouraging",
+        tone: "Let’s gently walk through this together, at your pace."
+      }
+    };
+
+    function startBot(choice) {
+      const greeting = welcome(choice);
+      alert(greeting);
+    }
+
+    function welcome(userChoice) {
+      const bot = botPersonality[userChoice.toLowerCase()];
+      return `Hi, I’m ${bot.name}. ${bot.tone} Would you like to start by telling me your name?`;
+    }
+
+    function confirmVoiceInputReceived(transcription, confidence) {
+      if (confidence < 0.7 || !transcription) {
+        return `I didn’t quite catch that. Could you please say it again or type it in for me?`;
+      } else {
+        return `Got it! You said: "${transcription}". Is that correct?`;
+      }
+    }
+
+    function initializeVoiceListener(callback) {
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        const confidence = event.results[0][0].confidence;
+        callback(transcript, confidence);
+      };
+      recognition.onerror = (event) => {
+        alert('Speech recognition error: ' + event.error);
+      };
+      recognition.start();
+    }
+
+    function activateVoice() {
+      initializeVoiceListener((transcript, confidence) => {
+        alert(confirmVoiceInputReceived(transcript, confidence));
+      });
+    }
+  </script>
+</body>
+</html>

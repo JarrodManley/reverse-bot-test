@@ -1,0 +1,89 @@
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.4.120/build/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.1.1/dist/tesseract.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ask FRANK or IRIS - Reverse Mortgage Help</title>
+  <meta name="description" content="Ask FRANK or IRIS – your friendly reverse mortgage assistants. Learn, upload documents, and get custom plans easily.">
+  <meta name="keywords" content="reverse mortgage, senior help, Jarrod Manley, financial advice, FAQ, Pell City, Alabama">
+  <meta name="author" content="Jarrod Manley">
+  <meta property="og:title" content="Ask FRANK or IRIS - Reverse Mortgage Help">
+  <meta property="og:description" content="Friendly reverse mortgage chatbot for seniors. Upload files, get personalized advice, and talk to FRANK or IRIS.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yourdomain.com">
+  <meta property="og:image" content="https://yourdomain.com/preview.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FinancialProduct",
+    "name": "Reverse Mortgage Advice by Jarrod Manley",
+    "provider": {
+      "@type": "Person",
+      "name": "Jarrod Manley",
+      "telephone": "614-400-3339",
+      "email": "mailto:jmanley@smprate.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Pell City",
+        "addressRegion": "AL"
+      }
+    },
+    "description": "Custom reverse mortgage planning for seniors with a friendly chatbot named FRANK or IRIS."
+  }
+  </script>
+  <style>
+    #generatePlanBtn, #faqBtn, #scheduleBtn, #emailBtn, #accessibilityBtn {
+      margin: 1rem auto;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      background-color: #00704a;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      display: block;
+    }
+    #generatePlanBtn:hover, #faqBtn:hover, #scheduleBtn:hover, #emailBtn:hover, #accessibilityBtn:hover {
+      background-color: #005a3c;
+    }
+    .checklist {
+      margin: 1rem auto;
+      max-width: 600px;
+      background: #f0f0f0;
+      padding: 1rem;
+      border-radius: 10px;
+    }
+    .checklist-item {
+      margin: 0.5rem 0;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <button id="generatePlanBtn" onclick="generatePlan()">🧭 Create My Reverse Mortgage Plan</button>
+  <button id="faqBtn" onclick="showFAQ()">❓ Reverse Mortgage FAQs</button>
+  <button id="scheduleBtn" onclick="showScheduler()">📅 Schedule a Call with Jarrod</button>
+  <button id="emailBtn" onclick="sendSummaryByEmail()">📧 Email My Plan</button>
+  <button id="accessibilityBtn" onclick="toggleAccessibility()">🦮 Accessibility Options</button>
+  <div id="checklist" class="checklist" style="display:none;"></div>
+  <div id="scheduler" style="max-width:600px; margin:2rem auto; display:none;">
+    <iframe src="https://calendly.com/jmanley-rm/consult" width="100%" height="600" frameborder="0"></iframe>
+  </div>
+
+  <script>
+    function toggleAccessibility() {
+      document.body.style.fontSize = '1.5em';
+      alert("Accessibility mode enabled: increased font size and readability enhancements.");
+    }
+
+    async function sendSummaryByEmail() {
+      const email = prompt("Enter your email address to receive your plan:");
+      if (!email) return;
+      const planText = userMemory.history?.map(h => h.content).join("\n\n") || "";
+      alert(`(Simulated) Email sent to ${email} with your reverse mortgage information. Future enhancement: real email service integration.`);
+    }
+  </script>
+</body>
+</html>
